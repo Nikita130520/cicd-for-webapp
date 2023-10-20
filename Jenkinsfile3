@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    tools { 
+        maven 'Maven' 
+   }
+    stages {
+          stage ('compile') {
+            steps {
+                sh "mvn compile" 
+            }
+         }
+          stage ('test') {
+            steps {
+                sh "mvn test" 
+            }
+         }
+          stage ('package') {
+            steps {
+                sh "mvn package" 
+            }
+         }
+          stage ('Build') {
+            steps {
+                sh "mvn install" 
+            }
+         }
+        stage('Deploy to Tomcat') {
+            steps {
+                script {
+                    sudo cp -r  /var/lib/jenkins/workspace/web-app-project/target/cicd-for-webapp.war /home/ec2-user/tomcat/webapps/
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Deployment successful'
+        }
+        failure {
+            echo 'Deployment failed'
+        }
+    }
+
+    }
