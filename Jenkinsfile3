@@ -27,7 +27,7 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                
-                    sh "cp -r  /var/lib/jenkins/workspace/web-app-project/target/cicd-for-webapp.war /home/ec2-user/tomcat/webapps/"
+                    sh "cp -r  /var/lib/jenkins/workspace/web-app-project/target/cicd-for-webapp.war /tomcat/webapps/"
             
             }
         }
